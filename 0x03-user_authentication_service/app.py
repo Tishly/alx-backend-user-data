@@ -11,7 +11,8 @@ app = Flask(__name__)
 def home() -> str:
     """Base route for API
     """
-    return jsonify({"meassage": "Bienvenue"})
+    message = {"message": "Bienvenue"}
+    return jsonify(message)
 
 
 @app.route("/users", methods=["POST"])
