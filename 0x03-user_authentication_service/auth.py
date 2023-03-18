@@ -43,12 +43,12 @@ class Auth:
         """Validates user login
         Return: bool
         """
-        user = self._db.find_user_by(email=email)
-        if user is None:
-            return NoResultFound
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return False
 
-        if bcrypt.checkpw(password.encode(), user.hashed_password) == 1:
+        if bcrypt.checkpw(password.encode(), user.hashed_password):
             return True
 
-        else:
-            return False
+        return False
