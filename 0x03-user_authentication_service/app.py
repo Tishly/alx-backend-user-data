@@ -35,7 +35,6 @@ def users(email: str, password: str) -> str:
     return jsonify(message)
 
 
-
 @app.route('/sessions', methods=['POST'])
 def log_in() -> str:
     """ Logs in a user and returns session ID """
