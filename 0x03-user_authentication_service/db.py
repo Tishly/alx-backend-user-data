@@ -34,6 +34,7 @@ class DB:
 
     def add_user(self, email: str, hashed_password: str) -> User:
         """Saves user to the database
+        Retuns: User object
         """
         user = User(email=email, hashed_password=hashed_password)
         self._session.add(user)
@@ -43,6 +44,7 @@ class DB:
 
     def find_user_by(self, **kwargs) -> User:
         """Finds users based on input
+        Returns: First instance of key found in database
         """
         if not kwargs:
             raise InvalidRequestError
@@ -59,3 +61,19 @@ class DB:
             raise NoResultFound
 
         return user
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Updates user content in database
+        Returns: None
+        """
+        user = self.find_user_by(id=user_id)
+
+        column_names = User.__table__.columns.keys()
+        for key in kwargs.keys():
+            if key not in column_names:
+                raise ValueError
+
+        for key, value in kwargs.items():
+            setattr(user, key, value)
+
+        self._session.commit()
