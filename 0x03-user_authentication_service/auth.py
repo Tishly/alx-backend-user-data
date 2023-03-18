@@ -37,4 +37,4 @@ class Auth:
             return user
 
         else:
-             raise ValueError(f'User {email} already exists')
+            raise ValueError(f'User {email} already exists')
